@@ -9,7 +9,7 @@ router.get("/signup",(req,res)=>{
 router.get("/login",(req,res)=>{
     res.send("Hello from login route");
 });
-
+ 
 router.get("/logout",(req,res)=>{
     res.send("Hello from logout route");
 });
