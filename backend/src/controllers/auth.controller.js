@@ -46,8 +46,8 @@ export const signup=async(req,res)=>{
       // Persist user first, then issue auth cookie
       const savedUser = await newUser.save();
       generateToken(savedUser._id, res);
-        console.log("User signed up successfully:", savedUser);
-        // res.status(201).json({ message: "User signed up successfully" });
+      console.log("User signed up successfully:", savedUser);
+      // res.status(201).json({ message: "User signed up successfully" });
       res.status(201).json({
         _id: newUser._id,
         fullName: newUser.fullName,

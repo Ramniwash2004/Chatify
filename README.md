@@ -17,7 +17,7 @@
 ## Tech Stack (Planned):
 - **Frontend:** React, TailwindCss
 - **Backend:** Node.js (Express or pure Node.js)
-- **Database:**MongoDB
+- **Database:** MongoDB
 - **Authentication:** JWT sessions
 -**deployment** Vercel
 
