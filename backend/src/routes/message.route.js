@@ -1,11 +1,17 @@
 import express from 'express';
-import { getAllContacts, getMessagesByUserId, sendMessage} from '../controllers/message.controller.js';
+import { getAllContacts, getChatPartners, getMessagesByUserId, sendMessage} from '../controllers/message.controller.js';
 import { protectedRoute } from '../middleware/auth.middleware.js';
+import {arcjetProtection} from "../middleware/arcjet.middleware.js";
 
 const router=express.Router();
 
-router.get("/contacts",protectedRoute,getAllContacts); //protected routed because only logged in users can access their contacts
-router.get("/:id",protectedRoute,getMessagesByUserId); //send the id from frontend
-router.post("/send/:id",protectedRoute,sendMessage); //send the id from frontend
+router.use(arcjetProtection,protectedRoute);//all routes defined below this line are protected
+
+
+router.get("/contacts",getAllContacts);
+router.get("/chats",getChatPartners);
+//  /:id will come from frontend
+router.get("/:id",getMessagesByUserId); 
+router.post("/send/:id",sendMessage); 
 
 export default router;

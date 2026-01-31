@@ -7,10 +7,10 @@
 - Custom JWT Authentication (no 3rd-party auth)
 - Zustand for State Management
 - Git & GitHub Workflow (branches, PRs, merges)
--  REST API with Node.js & Express
--  MongoDB for Data Persistence
--  Beautiful UI with React, Tailwind CSS & DaisyUI
--  Notification & Typing Sounds (with toggle)
+- REST API with Node.js & Express
+- MongoDB for Data Persistence
+- Beautiful UI with React, Tailwind CSS & *DaisyUI*
+- Notification & Typing Sounds (with toggle)
 ---
 
 
