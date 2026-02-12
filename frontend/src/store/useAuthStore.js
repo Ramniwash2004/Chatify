@@ -17,7 +17,6 @@ export const useAuthStore =create((set,get)=>({
             const res=await axiosInstance.get("/auth/check");
             set({authUser:res.data});
             // get().connectSocket();
-
         }catch(error){
             console.error("Error checking auth:",error);
             set({authUser:null});
@@ -31,12 +30,12 @@ export const useAuthStore =create((set,get)=>({
         try{
             const res=await axiosInstance.post("/auth/signup",data);
             set({authUser:res.data});
-
             toast.success("Account created successfully");
         }catch(error){
             toast.error(error.response?.data?.message || "Error signing up");
             set({isSigningUp:false});
-
+        }finally{
+            set({isSigningUp:false});
         }
     },
 
@@ -45,8 +44,7 @@ export const useAuthStore =create((set,get)=>({
         try{
             const res=await axiosInstance.post("/auth/login",data);
             set({authUser:res.data});
-           
-            // toast.success("Login successful");
+            toast.success("Login successful");
             // get().connectSocket();
         }catch(error){
             set({authUser:null});
@@ -60,11 +58,12 @@ export const useAuthStore =create((set,get)=>({
         try{
             await axiosInstance.post("/auth/logout");
             set({authUser:null});
-            // toast.success("Logged out successfully");
+            toast.success("Logged out successfully");
             // get().disconnectSocket();
         }catch(error){
-            // toast.error("Error logging out");
+            toast.error("Error logging out");
             console.error("Error logging out:",error);
         }
-    }
+    },
+    
 }));
