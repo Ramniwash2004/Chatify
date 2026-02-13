@@ -16,7 +16,7 @@ const __dirname = path.resolve();
 // Middleware
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true }));
 app.use(cookieParser());
-app.use(express.json({ limit: "5mb" })); // for req.body
+app.use(express.json({ limit: "15mb" })); // for req.body
 
 // Routes
 app.use("/api/auth", authRoutes);

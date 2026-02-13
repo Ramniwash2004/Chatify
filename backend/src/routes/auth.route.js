@@ -7,7 +7,9 @@ const router=express.Router();
 
 router.use(arcjetProtection);
 
-router.post("/signup",signup);
+router.post("/signup",()=>{
+    console.log("signup router hits !");
+},signup);
 router.post("/login",login);
 router.post("/logout",logout);
 router.put("/update-profile",protectedRoute,updateProfile);

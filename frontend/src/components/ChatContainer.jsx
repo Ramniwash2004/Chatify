@@ -12,21 +12,22 @@ function ChatContainer() {
     getMessagesByUserId,
     messages,
     isMessagesLoading,
-    subscribeToMessages,
-    unsubscribeFromMessages,
+    // subscribeToMessages,
+    // unsubscribeFromMessages,
   } = useChatStore();
-  const { authUser } = useAuthStore();
-  const messageEndRef = useRef(null);
+
+  const { authUser } = useAuthStore(); //to identify the sender
+  const messageEndRef = useRef(null); // to scroll to the latest message
 
   useEffect(() => {
-    getMessagesByUserId(selectedUser._id);
-    subscribeToMessages();
+    getMessagesByUserId(selectedUser._id); //fetch messages for the selected user
+    // subscribeToMessages();
 
     // clean up
-    return () => unsubscribeFromMessages();
-  }, [selectedUser, getMessagesByUserId, subscribeToMessages, unsubscribeFromMessages]);
+    // return () => unsubscribeFromMessages();
+  }, [selectedUser, getMessagesByUserId]);
 
-  useEffect(() => {
+  useEffect(() => { //scroll to the latest message whenever messages change
     if (messageEndRef.current) {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
@@ -67,9 +68,9 @@ function ChatContainer() {
             <div ref={messageEndRef} />
           </div>
         ) : isMessagesLoading ? (
-          <MessagesLoadingSkeleton />
+          <MessagesLoadingSkeleton/> 
         ) : (
-          <NoChatHistoryPlaceholder name={selectedUser.fullName} />
+          <NoChatHistoryPlaceholder name={selectedUser.fullName}/>
         )}
       </div>
 

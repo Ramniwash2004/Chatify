@@ -1,11 +1,12 @@
 import toast from 'react-hot-toast';
 import {create} from 'zustand';
 import { axiosInstance } from '../lib/axios';
+import { useAuthStore } from './useAuthStore';
 
 export const useChatStore=create((set,get)=>({
     allContacts:[],
     chats:[],
-    message:[],
+    messages:[],
     activeTab:"chats",
     selectedUser:null,
     isUserLoading:false,
@@ -46,5 +47,45 @@ export const useChatStore=create((set,get)=>({
         }finally{
             set({isUserLoading:false});
         }
+    },
+
+    getMessagesByUserId:async(userId)=>{
+        set({isMessageLoading:true});
+        try{
+            const res =await axiosInstance.get(`/messages/${userId}`);
+            set({messages:res.data});
+        }catch(error){
+            toast.error(error.response?.data?.message || "Failed to fetch messages");
+        }finally{
+            set({isMessageLoading:false});
+        }
+    },
+    
+    sendMessage:async(messageData)=>{
+        const {selectedUser,messages} = get();
+        const {authUser}=useAuthStore.getState();
+
+        const tempId=`temp-${Date.now()}`;//temporary id for optimistic UI update
+        const optimisticMessage={
+            _id:tempId,
+            sender:authUser._id,
+            receiverId:selectedUser._id,
+            text:messageData.text,
+            image:messageData.image,
+            createdAt:new Date().toISOString(),
+        };
+        //imimediately add the message to the UI before getting response from server (optimistic update)
+        set({messages:[...messages,optimisticMessage]});
+
+        try{
+            const res =await axiosInstance.post(`/messages/send/${selectedUser._id}`,messageData);
+            set({messages:[...messages,res.data]});
+            // or set({messages:messages.concat(res.data)});
+        }catch(error){
+           // remove optimistic message on failure
+            set({ messages: messages });
+            toast.error(error.response?.data?.message || "Something went wrong");
+        }
     }
+    
 }))

@@ -3,7 +3,7 @@ import { LogOutIcon, VolumeOffIcon, Volume2Icon } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 
-const mouseClickSound = new Audio("/sounds/mouse-click.mp3");
+const mouseClickSound = new Audio("/sounds/mouse-click.mp3");//sound import for button click
 
 function ProfileHeader() {
   const { logout, authUser, updateProfile } = useAuthStore();
@@ -13,8 +13,8 @@ function ProfileHeader() {
   const fileInputRef = useRef(null);
 
   const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+    const file = e.target.files[0];  //selected image file from input
+    if (!file) return; 
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -22,7 +22,7 @@ function ProfileHeader() {
     reader.onloadend = async () => {
       const base64Image = reader.result;
       setSelectedImg(base64Image);
-      await updateProfile({ profilePic: base64Image });
+      await updateProfile({ profilePic: base64Image }); //api call to update profile picture in backend
     };
   };
 

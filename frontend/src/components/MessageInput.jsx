@@ -18,13 +18,14 @@ function MessageInput() {
     if (!text.trim() && !imagePreview) return;
     if (isSoundEnabled) playRandomKeyStrokeSound();
 
-    sendMessage({
+    //call sendMessage and send the messageData
+    sendMessage({ 
       text: text.trim(),
       image: imagePreview,
     });
     setText("");
     setImagePreview("");
-    if (fileInputRef.current) fileInputRef.current.value = "";
+    if (fileInputRef.current) fileInputRef.current.value = "";//reset file input
   };
 
   const handleImageChange = (e) => {
@@ -76,7 +77,7 @@ function MessageInput() {
           className="flex-1 bg-slate-800/50 border border-slate-700/50 rounded-lg py-2 px-4"
           placeholder="Type your message..."
         />
-
+        {/* input for image upload (hidden) and button to trigger it */}
         <input
           type="file"
           accept="image/*"

@@ -11,7 +11,7 @@ function ActiveTabSwitch() {
           activeTab === "chats" ? "bg-cyan-500/20 text-cyan-400" : "text-slate-400"
         }`}
       >
-        Chats
+        Chats 
       </button>
 
       <button

@@ -13,6 +13,9 @@
 - Notification & Typing Sounds (with toggle)
 ---
 
+# How Cloudinary works
+![alt text](image.png)
+
 
 ## Tech Stack (Planned):
 - **Frontend:** React, TailwindCss
