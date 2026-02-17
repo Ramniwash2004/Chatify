@@ -1,6 +1,8 @@
 import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId } from "../lib/socket.js";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
+import { io } from "../lib/socket.js";
 
 
 export const getAllContacts=async(req,res)=>{
@@ -53,7 +55,13 @@ export const sendMessage=async(req,res)=>{
             imageUrl:imageUrl || undefined
         });
         await newMessage.save();
-        console.log("Message sent successfully:");
+        
+        const receiverSocketId=getReceiverSocketId(receiverId);
+        if(receiverSocketId){
+            //send the new message to the receiver in real-time using socket.io
+            io.to(receiverSocketId).emit("newMessage", newMessage);
+        }
+        
         res.status(201).json(newMessage);
     }catch(error){
         console.error("Error in sendMessage:", error);

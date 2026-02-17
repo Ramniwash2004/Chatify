@@ -7,10 +7,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
 import {ENV} from "../src/lib/env.js"
+import { app, server } from "./lib/socket.js";
+
 
 dotenv.config();
 
-const app = express();
 const __dirname = path.resolve();
 
 // Middleware
@@ -42,7 +43,7 @@ if (ENV.NODE_ENV === "production") {
 // Server Start
 const PORT = ENV.PORT;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   connectDB();
 });
